@@ -6,11 +6,57 @@
 <title>Trouver la longitude et lattitude d'un endroit avec Open Street Map</title>
 
 <style type="text/css">
-	    div.olControlAttribution {
-        bottom:0px;
+    div.olControlAttribution {
+        bottom: 0px;
+    }
+    .form-control {
+        display: block;
+        width: 100%;
+        height: 34px;
+        padding: 6px 12px;
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.42857;
+        color: #555;
+        vertical-align: middle;
+        background-color: #FFF;
+        border: 1px solid #CCC;
+        border-radius: 4px;
+        box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+        transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    }
+    .form-input-joy,
+    .form-control:focus {
+        border-color: #66AFE9;
+        outline: 0px none;
+        box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6);
+    }
+    #marker_coords {
+        width: 500px;
+    }
+    .wrapper {
+      padding: 1em;
+    }
+    .description {
+      font-size: 80%;
     }
 </style>
 <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <h3>Trouver la longitude et lattitude d'un endroit</h3>
+        <div style="width: 700px;">Zoomer et cliquer sur la carte pour obtenir la longitude et lattitude. Les coordonnées du point cliqué seront affichées dans la boîte de texte au dessous de la carte.</div>
+    </div>
+    <div class="wrapper">
+        <div id="coor_map"></div>
+    </div>
+    <div class="wrapper">
+        Résultat: <input id="marker_coords" class="form-control" />
+    </div>
+
+    <div class="description wrapper">Cet outil est basé sur: <a href="https://github.com/border0464111/coor-map">border0464111/coor-map</a>.</div>
+
 <script type="text/javascript">
 
 function init_coor_map(e_input){
@@ -76,12 +122,5 @@ function init_coor_map(e_input){
    	click.activate();
 }
 </script>
-</head>
-
-
-
-<body>
-	Find your location: <input id="coor_map_btn" onfocus="init_coor_map(this);" /><br>
-    <div id="coor_map" ></div>
 </body>
 </html>
