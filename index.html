@@ -58,69 +58,72 @@
     <div class="description wrapper">Cet outil est basé sur: <a href="https://github.com/border0464111/coor-map">border0464111/coor-map</a>.</div>
 
 <script type="text/javascript">
+(function() {
+    var e_input = document.getElementById("marker_coords");
 
-function init_coor_map(e_input){
-	// if map is already displayed do nothing
-	if (typeof ol_map === 'object') {
-		return false
-	};
+    // If map is already displayed do nothing
+    if (typeof ol_map === 'object') {
+        return false;
+    }
 
-	//show the div
-	document.getElementById('coor_map').style.height = '350px';
-	document.getElementById('coor_map').style.width = '350px';
+    // Show the div
+    document.getElementById('coor_map').style.height = '600px';
+    document.getElementById('coor_map').style.width = '700px';
 
-//click handler
-	OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {                
-	    defaultHandlerOptions: {
-	        'single': true,
-	        'double': false,
-	        'pixelTolerance': 0,
-	        'stopSingle': false,
-	        'stopDouble': false
-	    },
+    // Click handler
+    OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
+        defaultHandlerOptions: {
+            'single': true,
+            'double': false,
+            'pixelTolerance': 0,
+            'stopSingle': false,
+            'stopDouble': false
+        },
 
-	    initialize: function(options) {
-	        this.handlerOptions = OpenLayers.Util.extend(
-	            {}, this.defaultHandlerOptions
-	        );
-	        OpenLayers.Control.prototype.initialize.apply(
-	            this, arguments
-	        ); 
-	        this.handler = new OpenLayers.Handler.Click(
-	            this, {
-	                'click': this.trigger
-	            }, this.handlerOptions
-	        );
-	    }, 
+        initialize: function(options) {
+            this.handlerOptions = OpenLayers.Util.extend(
+                {}, this.defaultHandlerOptions
+            );
+            OpenLayers.Control.prototype.initialize.apply(
+                this, arguments
+            );
+            this.handler = new OpenLayers.Handler.Click(
+                this, {
+                    'click': this.trigger
+                }, this.handlerOptions
+            );
+        },
 
-	    trigger: function(e) {// onclick event
-	    	var lonlat = ol_map.getLonLatFromPixel(e.xy);
-			lonlat.transform( new OpenLayers.Projection("EPSG:900913"),new OpenLayers.Projection("EPSG:4326"));
-			e_input.value= lonlat.lat + "," + lonlat.lon;
-			e_input.blur();
+        trigger: function(e) {// onclick event
+            var lonlat = ol_map.getLonLatFromPixel(e.xy);
+            lonlat.transform( new OpenLayers.Projection("EPSG:900913"), new OpenLayers.Projection("EPSG:4326"));
+            e_input.value= lonlat.lat + "," + lonlat.lon;
+            e_input.blur();
 
-		    document.getElementById('coor_map').style.height = '0px';
-			document.getElementById('coor_map').style.width  = '0px';
-			
-			ol_map.destroy();
-			delete ol_map;
-	    }
-});
+            e_input.className += ' form-input-joy';
 
-	//create map	
-	ol_map = new OpenLayers.Map('coor_map');		
+            // document.getElementById('coor_map').style.height = '0px';
+            // document.getElementById('coor_map').style.width  = '0px';
+
+            // ol_map.destroy();
+            // delete ol_map;
+        }
+    });
+
+    // Create map
+    ol_map = new OpenLayers.Map('coor_map');
     mapnik = new OpenLayers.Layer.OSM("OpenStreetMap (Mapnik)");
     ol_map.addLayers([mapnik]);
-        
-    // set start point   
-	var position = new OpenLayers.LonLat(-8195883.9197088,5703883.9239026)
-	ol_map.setCenter(position, 10 );
 
-	// create click
+    // set start point
+    var position = new OpenLayers.LonLat(-8195883.9197088,5703883.9239026);
+    ol_map.setCenter(position, 11);
+
+    // create click
     var click = new OpenLayers.Control.Click();
     ol_map.addControl(click);
-   	click.activate();
-}
+    click.activate();
+})();
 </script>
 </body>
 </html>
